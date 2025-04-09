@@ -1,6 +1,13 @@
 name: Test
 
-on: [push]
+on:
+  workflow_dispatch:
+    inputs:
+      target_env_name:
+        type: choice
+        description: Target env name [it0, dev, prd]
+        required: true
+        options: [it0, dev, prd]
 
 permissions:
   id-token: write
@@ -21,5 +28,6 @@ jobs:
         id: set_vars
         run: |
           readonly ID="test"
+          readonly 
           echo "ID=$ID" >> $GITHUB_OUTPUT
           echo "TARGET_ENV_NAME=$TARGET_ENV_NAME" >> $GITHUB_OUTPUT
