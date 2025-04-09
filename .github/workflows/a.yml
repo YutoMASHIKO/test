@@ -12,7 +12,7 @@ jobs:
   set-env:
     runs-on: ubuntu-latest
     outputs:
-      TARGET_ENV_NAME: ${{ github.event.inputs.target_env_name }}
+      TARGET_ENV_NAME: ${{ steps.set_vars.outputs.TARGET_ENV_NAME }}
     steps:
       - name: checkout
         uses: actions/checkout@v4.1.1
@@ -22,3 +22,4 @@ jobs:
         run: |
           readonly ID="test"
           echo "ID=$ID" >> $GITHUB_OUTPUT
+          echo "TARGET_ENV_NAME=$TARGET_ENV_NAME" >> $GITHUB_OUTPUT
