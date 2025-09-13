@@ -38,7 +38,7 @@ jobs:
           pushd functions/$lambdafunction/
           pip install -r requirements.txt
           pip install -r test_requirements.txt
-          export PYTHONPATH=$PYTHONPATH:$(pwd)/my-send
+          export PYTHONPATH=$PYTHONPATH:$(pwd)/functions/my-send/main
           pytest -v
           popd
           echo "------------------------------------"
