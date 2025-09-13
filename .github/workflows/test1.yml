@@ -16,16 +16,29 @@ permissions:
   actions: read
 
 jobs:
-  set-env:
+  test-python:
     runs-on: ubuntu-latest
-    outputs:
-      TARGET_ENV_NAME: ${{ github.event.inputs.target_env_name }}
     steps:
-      - name: checkout
-        uses: actions/checkout@v4.1.1
+      - uses: actions/checkout@v3.3.0
 
-      - name: Set vars
-        id: set_vars
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.13'
+
+      - name: Install dependencies and Test with pytest
         run: |
-          readonly ID="test"
-          echo "ID=$ID" >> $GITHUB_OUTPUT
+          cd infra && \
+          python -m venv .venv && \
+          source .venv/bin/activate && \
+          while read lambdafunction
+          do
+          echo "------------------------------------"
+          echo "Lambda Function : $lambdafunction"
+          pushd functions/$lambdafunction/
+          pip install -r requirements.txt
+          pip install -r test_requirements.txt
+          pytest -v
+          popd
+          echo "------------------------------------"
+          done < ./functions/pytest_lambdafunctions.txt
