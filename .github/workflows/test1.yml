@@ -41,4 +41,4 @@ jobs:
           pytest -v
           popd
           echo "------------------------------------"
-          done < ./functions/pytest_lambdafunctions.txt
+          done < ./functions/pytest_functions.txt
